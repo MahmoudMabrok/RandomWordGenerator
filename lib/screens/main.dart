@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import './second_screen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -11,7 +12,6 @@ class MyApp extends StatelessWidget {
         home: new Scaffold(
             appBar: AppBar(
               title: Text('Random Generator'),
-
             ),
             body: Center(
               child: new Random(),
@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         )
     );
   }
+
 }
 class Random extends StatefulWidget {
   @override
@@ -27,9 +28,7 @@ class Random extends StatefulWidget {
 
 class _RandomState extends State<Random> {
   final List<WordPair> _suggestions = <WordPair>[];
-
   final Set<WordPair> _loved = Set<WordPair>();
-
   final TextStyle customStyle = TextStyle(
       fontSize: 30.0,
       color: Colors.blueGrey
@@ -37,7 +36,23 @@ class _RandomState extends State<Random> {
 
   @override
   Widget build(BuildContext context) {
-    return _generateRandom();
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Random "),
+        actions: <Widget>[
+          new IconButton(
+              icon: const Icon(Icons.list), onPressed: _pushNewRout(context))
+        ],
+      ),
+      body: Center(
+        child: _generateRandom(),
+      ),
+    );
+  }
+
+  _pushNewRout(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SecondScreen(_loved)));
   }
 
   Widget _generateRandom() {
